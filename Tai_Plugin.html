@@ -13,72 +13,193 @@
 <style>
 :root{--ink:#0a1730;--muted:#46556e;--line:#cfe0fb;--bg:#eef5ff;--card:#fff;--blue:#1668f2;--blue-ink:#0b4fd0;--radius:24px;--shadow:0 1px 2px rgba(16,60,130,.05),0 18px 36px -18px rgba(22,84,190,.35);--font:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:light}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;display:flex;flex-direction:column;min-height:100vh;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;background:radial-gradient(900px 480px at 0% -10%,#d6e7ff 0%,transparent 60%),radial-gradient(800px 460px at 100% 0%,#dff0ff 0%,transparent 55%),linear-gradient(180deg,#f4f9ff 0%,var(--bg) 100%) fixed;background-color:var(--bg)}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;background:linear-gradient(180deg,#f4f9ff 0%,var(--bg) 100%) fixed;background-color:var(--bg);overflow-x:hidden}
 a{color:var(--blue-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:10px}
-.wrap{width:100%;max-width:1360px;margin:0 auto;padding:0 clamp(14px,2.2vw,32px)}
-header{padding:clamp(12px,2.2vh,22px) 0 clamp(8px,1.6vh,14px)}
+[hidden]{display:none!important}
+.wrap{width:100%;max-width:1380px;margin:0 auto;padding:0 clamp(14px,2.2vw,32px)}
+
+/* nền động */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 18s ease-in-out infinite}
+.bg i:nth-child(1){width:46vw;height:46vw;left:-12vw;top:-18vw;background:#cfe2ff}
+.bg i:nth-child(2){width:38vw;height:38vw;right:-10vw;top:-8vw;background:#d6f4ea;animation-delay:-6s}
+.bg i:nth-child(3){width:34vw;height:34vw;left:30vw;bottom:-18vw;background:#e9ddff;animation-delay:-11s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,2.5vw) scale(1.08)}}
+
+/* đầu trang */
+header{padding:clamp(12px,2vh,20px) 0 6px}
 .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.logo{width:52px;height:52px;flex:none;filter:drop-shadow(0 10px 14px rgba(22,104,242,.35))}
+.logo{width:54px;height:54px;flex:none;filter:drop-shadow(0 10px 14px rgba(22,104,242,.35));transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.logo:hover{transform:rotate(-8deg) scale(1.12)}
 h1{margin:0;font-size:clamp(1.25rem,2.4vw,1.9rem);line-height:1.1;font-weight:800;letter-spacing:-.02em;text-transform:uppercase}
-h1 span{display:block;background:linear-gradient(90deg,#1668f2 0%,#0b4fd0 55%,#129a4b 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:.62em;margin-top:3px;letter-spacing:0}
-.net{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:600;font-size:.82rem}
-.net svg{width:16px;height:16px}
-.lead{margin:10px 0 0;color:var(--muted);font-size:.95rem}
-main{flex:1;display:flex;align-items:center;padding:clamp(6px,1.4vh,16px) 0}
-.grid{display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
-.card{--c:#1668f2;--c2:#2f80ff;--soft:#e3eeff;position:relative;display:flex;flex-direction:column;gap:10px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;box-shadow:var(--shadow);overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}
-.card::before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--c),var(--c2))}
-@media (hover:hover) and (pointer:fine){.card:hover{transform:translateY(-4px)}}
-.claude{--c:#c6613f;--c2:#e8946f;--soft:#fbece5}
-.gema{--c:#1668f2;--c2:#7aa8ff;--soft:#e3eeff}
-.gemb{--c:#7c3aed;--c2:#c084fc;--soft:#f0e7ff}
-.gpt{--c:#0f9d7a;--c2:#5fd4b4;--soft:#dcf7ef}
-.head{display:flex;align-items:center;gap:12px;margin-top:4px}
-.ico{width:48px;height:48px;border-radius:14px;background:var(--soft);display:grid;place-items:center;flex:none}
-.ico svg{width:30px;height:30px}
-.head h2{margin:0;font-size:1.12rem;line-height:1.15;font-weight:800;letter-spacing:-.01em}
-.head small{display:block;margin-top:2px;color:var(--muted);font-weight:500;font-size:.78rem}
-.tag{align-self:flex-start;padding:2px 11px;border-radius:999px;background:var(--soft);color:var(--c);font-size:.75rem;font-weight:700}
-.desc{margin:0;color:var(--muted);font-size:.86rem}
-ol{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;counter-reset:s}
-li{counter-increment:s;display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;font-size:.82rem;line-height:1.35}
-li::before{content:counter(s);display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--soft);color:var(--c);font-weight:800;font-size:.74rem}
+h1 span{display:block;background:linear-gradient(90deg,#1668f2,#0b4fd0 50%,#129a4b,#1668f2);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:.62em;margin-top:3px;letter-spacing:0;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:200% 0}}
+.tools{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:600;font-size:.82rem}
+.pill svg{width:16px;height:16px}
+.pill.on{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(22,163,74,.12)}}
+.iconbtn{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:#fff;cursor:pointer;transition:transform .2s,background-color .2s,box-shadow .2s}
+.iconbtn svg{width:20px;height:20px}
+.iconbtn:hover{transform:translateY(-2px) rotate(-6deg);background:#eef4fe;box-shadow:0 8px 18px -8px rgba(22,104,242,.5)}
+.lead{margin:8px 0 0;color:var(--muted);font-size:.95rem}
+
+/* 3 bước */
+.stepper{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+.st{display:flex;align-items:center;gap:10px;flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:18px;background:rgba(255,255,255,.72);border:1.5px solid var(--line);backdrop-filter:blur(6px);transition:transform .2s,background-color .2s,box-shadow .2s}
+.st:hover{transform:translateY(-3px);background:#fff;box-shadow:0 14px 26px -16px rgba(22,84,190,.5)}
+.st b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(180deg,#2f80ff,#1262f0);color:#fff;font-size:.9rem;flex:none;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.st:hover b{transform:scale(1.18) rotate(-10deg)}
+.st span{font-size:.86rem;line-height:1.25}
+.st em{display:block;font-style:normal;font-weight:700;font-size:.9rem}
+
+/* thanh công cụ */
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 14px}
+.search{position:relative;flex:1 1 240px;max-width:380px}
+.search svg{position:absolute;left:13px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:#7a8aa6;pointer-events:none}
+.search input{width:100%;height:42px;border-radius:999px;border:1.5px solid var(--line);background:#fff;padding:0 14px 0 40px;transition:border-color .2s,box-shadow .2s}
+.search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px #e3eeff}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:38px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:.86rem;cursor:pointer;transition:transform .15s,background-color .2s,color .2s}
+.chip:hover{transform:translateY(-2px);background:#eef4fe}
+.chip[aria-pressed="true"]{background:linear-gradient(180deg,#2f80ff,#1262f0);color:#fff;border-color:transparent;box-shadow:0 8px 18px -8px rgba(22,104,242,.7)}
+.count{margin-left:auto;color:var(--muted);font-size:.84rem}
+
+/* thanh quản trị */
+.adminbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px;padding:10px 12px;border-radius:18px;background:#fff7e8;border:1.5px dashed #e0a030;animation:drop .4s ease both}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+.adminbar strong{color:#92400e;margin-right:4px;font-size:.86rem}
+.dirty{padding:2px 10px;border-radius:999px;background:#fee2e2;color:#991b1b;font-size:.76rem;font-weight:700}
+.sbtn{height:36px;padding:0 14px;border-radius:999px;border:1.5px solid #e6c789;background:#fff;font-weight:700;font-size:.82rem;cursor:pointer;transition:transform .15s,background-color .2s}
+.sbtn:hover{transform:translateY(-2px);background:#fff3d6}
+.sbtn.go{background:linear-gradient(180deg,#22c55e,#15803d);color:#fff;border-color:transparent}
+.sbtn.bad{color:#991b1b}
+
+/* lưới thẻ */
+main{flex:1;padding:0 0 clamp(8px,2vh,20px)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));perspective:1200px}
+@media (min-width:1200px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.card{--c:#1668f2;--c2:#7aa8ff;--soft:#e3eeff;--rx:0deg;--ry:0deg;--mx:50%;--my:0%;position:relative;display:flex;flex-direction:column;gap:11px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px 20px 18px;box-shadow:var(--shadow);overflow:hidden;transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .18s ease-out,box-shadow .25s,border-color .25s;opacity:0;animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i,0)*90ms)}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1}}
+.card::before{content:'';position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--c),var(--c2),var(--c));background-size:200% 100%;transition:height .25s}
+.card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(420px circle at var(--mx) var(--my),color-mix(in srgb,var(--c) 18%,transparent),transparent 60%);opacity:0;transition:opacity .25s;pointer-events:none}
+@media (hover:hover) and (pointer:fine){
+ .card:hover{box-shadow:0 30px 50px -22px color-mix(in srgb,var(--c) 55%,transparent),0 0 0 1px var(--c);border-color:var(--c);transform:translateY(-8px) rotateX(var(--rx)) rotateY(var(--ry))}
+ .card:hover::before{height:8px;animation:bar 2.2s linear infinite}
+ .card:hover::after{opacity:1}
+}
+@keyframes bar{to{background-position:200% 0}}
+.c-orange{--c:#c6613f;--c2:#f0a27f;--soft:#fbece5}
+.c-blue{--c:#1668f2;--c2:#7aa8ff;--soft:#e3eeff}
+.c-purple{--c:#7c3aed;--c2:#c084fc;--soft:#f0e7ff}
+.c-green{--c:#0f9d7a;--c2:#5fd4b4;--soft:#dcf7ef}
+.c-pink{--c:#db2777;--c2:#f9a8d4;--soft:#fde7f1}
+.c-slate{--c:#475569;--c2:#94a3b8;--soft:#e8edf3}
+.head{display:flex;align-items:center;gap:12px;margin-top:4px;transform:translateZ(18px)}
+.ico{width:52px;height:52px;border-radius:16px;background:var(--soft);display:grid;place-items:center;flex:none;transition:transform .45s cubic-bezier(.3,1.7,.5,1),box-shadow .3s}
+.ico svg{width:32px;height:32px}
+@media (hover:hover){.card:hover .ico{transform:rotate(-10deg) scale(1.14);box-shadow:0 10px 22px -10px var(--c)}}
+.head h2{margin:0;font-size:1.15rem;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+.head small{display:block;margin-top:2px;color:var(--muted);font-weight:500;font-size:.8rem}
+.tag{align-self:flex-start;padding:3px 12px;border-radius:999px;background:var(--soft);color:var(--c);font-size:.76rem;font-weight:700}
+.desc{margin:0;color:var(--muted);font-size:.88rem}
+ol{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;font-size:.85rem;line-height:1.38;transition:transform .2s}
+li::before{content:counter(s);display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--soft);color:var(--c);font-weight:800;font-size:.76rem;transition:transform .3s cubic-bezier(.3,1.7,.5,1),background-color .2s,color .2s}
+li:hover{transform:translateX(4px)}
+li:hover::before{transform:scale(1.25);background:var(--c);color:#fff}
 code{font-family:Consolas,'Courier New',monospace;background:#eef4fe;padding:0 5px;border-radius:6px;font-size:.92em}
 .act{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:8px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:7px 14px;border-radius:999px;border:2px solid transparent;font:inherit;font-weight:700;font-size:.86rem;text-decoration:none;text-align:center;line-height:1.15;background:#eef4fe;color:var(--ink);transition:transform .12s ease,filter .15s ease,background-color .15s ease}
-.btn svg{width:18px;height:18px;flex:none}
+.btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid transparent;font-weight:700;font-size:.88rem;text-decoration:none;text-align:center;line-height:1.15;background:#eef4fe;color:var(--ink);cursor:pointer;transition:transform .15s,filter .2s,background-color .2s,box-shadow .25s}
+.btn svg{width:18px;height:18px;flex:none;transition:transform .3s}
 .btn small{font-weight:600;opacity:.85;font-size:.76rem}
 .btn.primary{background:linear-gradient(180deg,var(--c2),var(--c));color:#fff;box-shadow:0 10px 22px -10px var(--c)}
-.btn.primary:hover{filter:brightness(1.07)}
 .btn.ghost{background:#fff;border-color:var(--line)}
-.btn.ghost:hover{background:var(--soft)}
-.btn:active{transform:translateY(2px)}
-@media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px)}}
-footer{border-top:1px solid var(--line);background:rgba(255,255,255,.7);backdrop-filter:blur(6px)}
+.btn.ghost:hover{background:var(--soft);border-color:var(--c)}
+.btn::before{content:'';position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s}
+.btn:hover::before{left:130%}
+.btn:hover svg{transform:translateY(2px) scale(1.15)}
+.btn[data-t="doc"]:hover svg,.btn[data-t="link"]:hover svg{transform:scale(1.2) rotate(-6deg)}
+.btn.primary:hover{filter:brightness(1.07);box-shadow:0 16px 28px -10px var(--c)}
+.btn:active{transform:scale(.97)}
+@media (hover:hover){.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.6);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(3);opacity:0}}
+.tools-card{position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:3;transform:translateZ(30px)}
+.tools-card button{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;font-size:15px;line-height:1;transition:transform .15s,background-color .15s}
+.tools-card button:hover{transform:scale(1.15);background:#fff3d6}
+.tools-card button.del:hover{background:#fee2e2}
+.add{display:grid;place-items:center;min-height:200px;border:2px dashed #e0a030;background:rgba(255,247,232,.7);color:#92400e;font-weight:800;cursor:pointer;text-align:center;transition:transform .2s,background-color .2s}
+.add:hover{transform:translateY(-6px);background:#fff3d6}
+.add span{display:block;font-size:2.4rem;line-height:1}
+.empty{padding:40px 10px;text-align:center;color:var(--muted)}
+
+/* khung thông tin dưới */
+.info{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:22px 0 4px}
+.box{display:flex;gap:12px;padding:14px 16px;border-radius:20px;background:rgba(255,255,255,.75);border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s,background-color .2s}
+.box:hover{transform:translateY(-4px);background:#fff;box-shadow:0 18px 30px -20px rgba(22,84,190,.55)}
+.box i{font-style:normal;font-size:1.5rem;line-height:1;flex:none;transition:transform .35s cubic-bezier(.3,1.7,.5,1)}
+.box:hover i{transform:scale(1.25) rotate(-8deg)}
+.box b{display:block;font-size:.92rem}
+.box span{font-size:.82rem;color:var(--muted)}
+
+/* chân trang */
+footer{border-top:1px solid var(--line);background:rgba(255,255,255,.75);backdrop-filter:blur(6px)}
 .foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 0}
 .foot .who{flex:1;min-width:260px;font-size:.84rem;color:var(--muted)}
 .foot .who b{color:var(--ink)}
 .foot .who em{display:block;font-style:normal;font-size:.74rem;margin-top:2px;color:#7a8aa6}
 .contact{display:flex;gap:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;background:#fff;border:1.5px solid var(--line);color:var(--ink);font-weight:700;font-size:.86rem;text-decoration:none}
-.chip svg{width:18px;height:18px}
-.chip:hover{background:#eef4fe}
-@media (max-width:1180px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}main{align-items:flex-start}}
-@media (max-width:620px){.grid{grid-template-columns:1fr}.net{margin-left:0}.logo{width:44px;height:44px}}
-@media (prefers-reduced-motion:reduce){.card,.btn{transition:none}.card:hover,.btn:hover{transform:none}}
+.cbtn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;background:#fff;border:1.5px solid var(--line);color:var(--ink);font-weight:700;font-size:.86rem;text-decoration:none;transition:transform .15s,background-color .2s,box-shadow .2s}
+.cbtn svg{width:18px;height:18px;transition:transform .3s}
+.cbtn:hover{transform:translateY(-2px);background:#eef4fe;box-shadow:0 10px 20px -12px rgba(22,104,242,.6)}
+.cbtn:hover svg{transform:rotate(-14deg) scale(1.15)}
+.lockbtn{font-size:.74rem;background:none;border:none;color:#7a8aa6;cursor:pointer;text-decoration:underline;padding:2px 4px}
+
+/* hộp thoại */
+dialog{border:none;border-radius:24px;padding:0;width:min(700px,94vw);max-height:92vh;box-shadow:0 40px 80px -20px rgba(10,23,48,.55);color:var(--ink)}
+dialog::backdrop{background:rgba(10,23,48,.45);backdrop-filter:blur(3px)}
+dialog[open]{animation:pop .25s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(10px)}}
+.dlg{display:flex;flex-direction:column;max-height:92vh}
+.dlg h3{margin:0;padding:18px 22px 10px;font-size:1.15rem}
+.dlg .body{padding:4px 22px 6px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.dlg .foot2{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px 18px;flex-wrap:wrap}
+label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.84rem}
+label small{font-weight:500;color:var(--muted)}
+input[type=text],input[type=password],input[type=url],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff;font-weight:500}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px #e3eeff}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.brow{display:grid;grid-template-columns:1.2fr 1.7fr .9fr .9fr 34px;gap:6px;align-items:center}.brow input,.brow select{padding:8px 9px;font-size:.84rem}
+.brow button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:#fff;cursor:pointer}
+.hint{font-size:.78rem;color:var(--muted);margin:0}
+.err{color:#b91c1c;font-size:.84rem;font-weight:700;min-height:1.2em}
+.okb{height:42px;padding:0 20px;border-radius:999px;border:none;background:linear-gradient(180deg,#2f80ff,#1262f0);color:#fff;font-weight:800;cursor:pointer;transition:transform .15s,filter .2s}
+.okb:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.no{height:42px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;cursor:pointer}
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,24px);max-width:min(92vw,560px);padding:12px 20px;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:.9rem;box-shadow:0 16px 34px -12px rgba(10,23,48,.7);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:100;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:620px){.tools{margin-left:0}.brow{grid-template-columns:1fr 1fr}.row2{grid-template-columns:1fr}.count{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1}}
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f80ff"/><stop offset="1" stop-color="#129a4b"/></linearGradient>
     <linearGradient id="gm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4285f4"/><stop offset=".55" stop-color="#9b72cb"/><stop offset="1" stop-color="#d96570"/></linearGradient>
     <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4.5 20h15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3A4.5 4.5 0 0 0 11 19.4l1-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3.5l1.8 4.6-2.3 1.4a11 11 0 0 0 6 6l1.4-2.3L20 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
     <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m20 20-4.2-4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -87,60 +208,43 @@ footer{border-top:1px solid var(--line);background:rgba(255,255,255,.7);backdrop
     <div class="top">
       <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Logo Trợ lý giáo viên"><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M32 14 8 26l24 12 24-12z" fill="#fff"/><path d="M16 33v9c0 4 7 8 16 8s16-4 16-8v-9l-16 8z" fill="#fff" fill-opacity=".9"/><path d="M56 27v14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
       <h1>Tải plugin trợ lý giáo viên<span>Chọn đúng gói theo phần mềm bạn đang dùng</span></h1>
-      <div class="net"><svg><use href="#i-wifi"/></svg>Cần có Internet để tải</div>
+      <div class="tools">
+        <div class="pill on"><svg><use href="#i-wifi"/></svg>Cần có Internet để tải</div>
+        <button class="iconbtn" id="btnAdmin" type="button" title="Quản trị" aria-label="Đăng nhập quản trị"><svg><use href="#i-lock"/></svg></button>
+      </div>
     </div>
     <p class="lead">Bấm <b>một nút</b> để tải gói phù hợp (1 tệp .rar, cần <b>WinRAR</b> hoặc <b>7-Zip</b> để giải nén), rồi đọc tệp PDF hướng dẫn bên trong (có ảnh minh họa từng bước).</p>
+    <div class="stepper">
+      <div class="st"><b>1</b><span><em>Chọn phần mềm</em>Claude, Gemini hoặc ChatGPT</span></div>
+      <div class="st"><b>2</b><span><em>Bấm một nút tải</em>Giải nén bằng WinRAR hoặc 7-Zip</span></div>
+      <div class="st"><b>3</b><span><em>Làm theo PDF</em>Có ảnh minh họa từng bước</span></div>
+    </div>
   </div>
 </header>
 
 <main>
   <div class="wrap">
-    <div class="grid">
-
-      <article class="card claude" id="claude">
-        <div class="head">
-          <div class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#d97757" stroke-width="5" stroke-linecap="round"><path d="M24 5v38"/><path d="M5 24h38"/><path d="M10.6 10.6l26.8 26.8"/><path d="M37.4 10.6 10.6 37.4"/></g><circle cx="24" cy="24" r="4" fill="#d97757"/></svg></div>
-          <div><h2>Claude</h2><small>Ứng dụng trên máy tính</small></div>
-        </div>
-        <span class="tag">139 skill · 283 agent</span>
-        <p class="desc">Cài toàn bộ bộ skill vào ứng dụng Claude.</p>
-        <ol><li><span>Tải <b>1 tệp .rar</b>, giải nén ra</span></li><li><span>Cài đặt → Plugin → <b>Thêm</b> → Tải lên plugin: chọn <b>1 tệp zip</b> (không giải nén zip)</span></li><li><span>Mở lại Claude, gõ <code>Cài bộ skill</code></span></li></ol>
-        <div class="act"><a class="btn primary" href="https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/1-plugin-Claude-PC/1-plugin-Claude-PC.rar"><svg><use href="#i-dl"/></svg>Tải gói Claude <small>.rar · 52 MB</small></a></div>
-      </article>
-
-      <article class="card gema" id="gemini-a">
-        <div class="head">
-          <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5C12.9 7.6 16.4 11.1 22.5 12 16.4 12.9 12.9 16.4 12 22.5 11.1 16.4 7.6 12.9 1.5 12 7.6 11.1 11.1 7.6 12 1.5z" fill="url(#gm)"/></svg></div>
-          <div><h2>Gemini · Cách A</h2><small>Tải tệp vào mục Kỹ năng</small></div>
-        </div>
-        <span class="tag">Nhanh nhất · cần thẻ Kỹ năng</span>
-        <p class="desc">Dùng khi Tuỳ chỉnh có thẻ <b>Kỹ năng</b>.</p>
-        <ol><li><span>Tải <b>1 tệp .rar</b>, giải nén ra, đọc PDF</span></li><li><span>Kỹ năng → Tạo → Tải lên, chọn <code>SKILL.md</code></span></li><li><span>Gõ <code>@tro-ly-giao-vien Bắt đầu</code></span></li></ol>
-        <div class="act"><a class="btn primary" href="https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep.rar"><svg><use href="#i-dl"/></svg>Tải gói Gemini cách A <small>.rar · 621 KB</small></a></div>
-      </article>
-
-      <article class="card gemb" id="gemini-b">
-        <div class="head">
-          <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5C12.9 7.6 16.4 11.1 22.5 12 16.4 12.9 12.9 16.4 12 22.5 11.1 16.4 7.6 12.9 1.5 12 7.6 11.1 11.1 7.6 12 1.5z" fill="url(#gm)"/></svg></div>
-          <div><h2>Gemini · Cách B</h2><small>Tạo Gem mới, mở PDF rồi sao chép</small></div>
-        </div>
-        <span class="tag">Luôn dùng được</span>
-        <p class="desc">Dùng khi chưa có thẻ Kỹ năng hoặc cách A không được.</p>
-        <ol><li><span>Tải <b>1 tệp .rar</b>, giải nén ra, đọc PDF</span></li><li><span>Gem mới: chép 3 khối trong PDF, nạp <code>TRI-THUC-GEM.txt</code></span></li><li><span>Lưu, mở Gem, gõ <code>Bắt đầu</code></span></li></ol>
-        <div class="act"><a class="btn primary" href="https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep.rar"><svg><use href="#i-dl"/></svg>Tải gói Gemini cách B <small>.rar · 512 KB</small></a></div>
-      </article>
-
-      <article class="card gpt" id="chatgpt">
-        <div class="head">
-          <div class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#10a37f" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="5" width="10" height="22" rx="5"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(60 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(120 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(180 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(240 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(300 24 24)"/></g></svg></div>
-          <div><h2>ChatGPT</h2><small>Bản web chatgpt.com</small></div>
-        </div>
-        <span class="tag">Đã thử trên tài khoản Free</span>
-        <p class="desc">Plugin tải lên; có cách dự phòng dán nội dung.</p>
-        <ol><li><span>Tải <b>1 tệp .rar</b>, giải nén ra (zip bên trong <b>không giải nén</b>)</span></li><li><span>Plugin → <b>Thêm</b> → Tải lên tệp nén plugin</span></li><li><span>Gõ <code>@</code> chọn <code>tro-ly-giao-vien</code></span></li></ol>
-        <div class="act"><a class="btn primary" href="https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/4-ChatGPT-plugin-tai-len-zip/4-ChatGPT-plugin-tai-len-zip.rar"><svg><use href="#i-dl"/></svg>Tải gói ChatGPT <small>.rar · 580 KB</small></a></div>
-      </article>
-
+    <div class="adminbar" id="adminbar" hidden>
+      <strong>Chế độ quản trị</strong><span class="dirty" id="dirty" hidden>Chưa lưu</span>
+      <button class="sbtn go" id="aSave" type="button">Lưu lên GitHub</button>
+      <button class="sbtn" id="aExport" type="button">Xuất JSON</button>
+      <button class="sbtn" id="aImport" type="button">Nhập JSON</button>
+      <button class="sbtn" id="aReset" type="button">Về bản gốc</button>
+      <button class="sbtn" id="aSet" type="button">Cài đặt</button>
+      <button class="sbtn bad" id="aOut" type="button">Đăng xuất</button>
+      <input type="file" id="fileIn" accept="application/json,.json" hidden>
+    </div>
+    <div class="bar">
+      <label class="search" style="font-weight:500"><svg><use href="#i-search"/></svg><input id="q" type="text" placeholder="Tìm gói, ví dụ: Gemini, ChatGPT…" autocomplete="off" aria-label="Tìm gói"></label>
+      <div class="chips" id="chips"></div>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>Không có gói nào khớp. Thử từ khóa khác hoặc chọn “Tất cả”.</div>
+    <div class="info">
+      <div class="box"><i>💡</i><div><b>Chưa biết chọn cách nào?</b><span>Gemini: thử cách A trước; không có thẻ Kỹ năng thì dùng cách B.</span></div></div>
+      <div class="box"><i>🗜️</i><div><b>Cần phần mềm giải nén</b><span>Tệp .rar cần WinRAR hoặc 7-Zip (miễn phí). Tệp .zip bên trong thì không giải nén.</span></div></div>
+      <div class="box"><i>🔒</i><div><b>Bảo mật</b><span>Tài liệu tải lên các công cụ AI là gửi cho nhà cung cấp. Bỏ tên, mã định danh học sinh.</span></div></div>
     </div>
   </div>
 </main>
@@ -149,13 +253,305 @@ footer{border-top:1px solid var(--line);background:rgba(255,255,255,.7);backdrop
   <div class="wrap"><div class="foot">
     <div class="who">
       <b>Plugin do cá nhân thầy Nguyễn Thanh Liêm phát triển.</b> Có thể chỉ phù hợp trong thời điểm hiện tại. Các thầy cô có thể tham khảo để sử dụng.
-      <em>Biểu tượng phần mềm chỉ để nhận diện, thuộc quyền của chủ sở hữu tương ứng. Bản đóng gói ngày 21/11/2026.</em>
+      <em>Biểu tượng phần mềm chỉ để nhận diện, thuộc quyền của chủ sở hữu tương ứng. Cập nhật: <span id="upd"></span>. <button class="lockbtn" id="btnAdmin2" type="button">Quản trị</button></em>
     </div>
     <div class="contact">
-      <a class="chip" href="tel:0888358363"><svg><use href="#i-phone"/></svg>Điện thoại: 0888 358 363</a>
-      <a class="chip" href="https://zalo.me/0888358363" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="3" width="21" height="16" rx="5" fill="#0068ff"/><path d="M6 19.5 4 22.5l5-2z" fill="#0068ff"/><path d="M7.5 8.5h5l-5 5.5h5.2M14.2 8.5v5.6M18 11.3a2.8 2.8 0 1 0 0 .1" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Zalo: 0888 358 363</a>
+      <a class="cbtn" href="tel:0888358363"><svg><use href="#i-phone"/></svg>Điện thoại: 0888 358 363</a>
+      <a class="cbtn" href="https://zalo.me/0888358363" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="3" width="21" height="16" rx="5" fill="#0068ff"/><path d="M6 19.5 4 22.5l5-2z" fill="#0068ff"/><path d="M7.5 8.5h5l-5 5.5h5.2M14.2 8.5v5.6M18 11.3a2.8 2.8 0 1 0 0 .1" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Zalo: 0888 358 363</a>
     </div>
   </div></div>
 </footer>
+
+<!-- Đăng nhập -->
+<dialog id="dLogin"><form method="dialog" class="dlg" id="fLogin">
+  <h3>Đăng nhập quản trị</h3>
+  <div class="body">
+    <label>Tài khoản<input type="text" id="lUser" autocomplete="username" required></label>
+    <label>Mật khẩu<input type="password" id="lPass" autocomplete="current-password" required></label>
+    <div class="err" id="lErr" role="alert"></div>
+  </div>
+  <div class="foot2"><button type="button" class="no" data-close>Hủy</button><button type="submit" class="okb">Đăng nhập</button></div>
+</form></dialog>
+
+<!-- Sửa / thêm mục -->
+<dialog id="dEdit"><form method="dialog" class="dlg" id="fEdit">
+  <h3 id="eTitle">Sửa mục</h3>
+  <div class="body">
+    <div class="row2">
+      <label>Tên mục<input type="text" id="eName" required maxlength="60"></label>
+      <label>Dòng phụ<input type="text" id="eSub" maxlength="80"></label>
+    </div>
+    <div class="row2">
+      <label>Nhóm<input type="text" id="eGroup" list="groups" maxlength="30" placeholder="Claude, Gemini, ChatGPT, Khác…"><datalist id="groups"></datalist></label>
+      <label>Nhãn nhỏ<input type="text" id="eTag" maxlength="60"></label>
+    </div>
+    <div class="row2">
+      <label>Biểu tượng<select id="eBrand"><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="chatgpt">ChatGPT</option><option value="package">Gói phần mềm</option><option value="doc">Tài liệu</option></select></label>
+      <label>Màu<select id="eColor"><option value="blue">Xanh dương</option><option value="orange">Cam</option><option value="purple">Tím</option><option value="green">Xanh lá</option><option value="pink">Hồng</option><option value="slate">Xám</option></select></label>
+    </div>
+    <label>Mô tả ngắn<textarea id="eDesc" style="min-height:60px"></textarea></label>
+    <label>Các bước (mỗi dòng một bước)<small>Dùng **chữ đậm** và `mã` nếu cần.</small><textarea id="eSteps"></textarea></label>
+    <div><b style="font-size:.84rem">Các nút tải / liên kết</b>
+      <p class="hint">Mỗi nút: nhãn, địa chỉ (bắt đầu bằng https://), loại, ghi chú nhỏ (ví dụ .rar · 52 MB). Nút đầu tiên là nút chính.</p>
+      <div id="eBtns" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"></div>
+      <button type="button" class="sbtn" id="eAddBtn" style="margin-top:8px">+ Thêm nút</button>
+    </div>
+    <div class="err" id="eErr" role="alert"></div>
+  </div>
+  <div class="foot2"><button type="button" class="no" data-close>Hủy</button><button type="submit" class="okb">Lưu mục</button></div>
+</form></dialog>
+
+<!-- Cài đặt -->
+<dialog id="dSet"><form method="dialog" class="dlg" id="fSet">
+  <h3>Cài đặt quản trị</h3>
+  <div class="body">
+    <label>Token GitHub (để lưu thay đổi lên kho)<input type="password" id="sTok" autocomplete="off" placeholder="github_pat_…"><small>Tạo tại GitHub → Settings → Developer settings → Fine-grained tokens: chỉ chọn kho này, quyền Contents: Read and write. Token chỉ lưu trong trình duyệt này.</small></label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="sbtn" id="sTokSave">Lưu token</button><button type="button" class="sbtn bad" id="sTokDel">Xóa token</button></div>
+    <hr style="border:none;border-top:1px solid var(--line);width:100%">
+    <label>Mật khẩu mới<input type="password" id="sNew" autocomplete="new-password" minlength="10"><small>Ít nhất 10 ký tự. Sau khi đổi phải bấm “Lưu lên GitHub” thì mới có hiệu lực cho mọi máy.</small></label>
+    <label>Nhập lại mật khẩu mới<input type="password" id="sNew2" autocomplete="new-password"></label>
+    <button type="button" class="sbtn" id="sPw" style="align-self:flex-start">Đổi mật khẩu</button>
+    <p class="hint"><b>Lưu ý an toàn:</b> trang này là tệp HTML tĩnh nên khóa đăng nhập chỉ có tác dụng ẩn giao diện quản trị. Quyền ghi thật nằm ở token GitHub của bạn; không ai ghi được lên kho nếu không có token.</p>
+    <div class="err" id="sErr" role="alert"></div>
+  </div>
+  <div class="foot2"><button type="button" class="no" data-close>Đóng</button></div>
+</form></dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="seed">{"version":1,"updated":"2026-11-22","admin":{"user":"quantri","salt":"3pUHHD0wetaL2Asc+aUP8w==","iter":200000,"hash":"Dpywwv4DzJRoO7p27xBZ+/NJyAjqCIK6M5HGCV1gq2w="},"items":[{"id":"claude","group":"Claude","brand":"claude","color":"orange","title":"Claude","subtitle":"Ứng dụng trên máy tính","tag":"139 skill · 283 agent","desc":"Cài toàn bộ bộ skill vào ứng dụng Claude. Gói có bản đầy đủ và bản gọn, chọn 1 tệp zip.","steps":["Tải **1 tệp .rar**, giải nén ra","Cài đặt → Plugin → **Thêm** → Tải lên plugin: chọn **1 tệp zip** (không giải nén zip)","Mở lại Claude, gõ `Cài bộ skill`"],"buttons":[{"label":"Tải gói Claude","url":"https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/1-plugin-Claude-PC/1-plugin-Claude-PC.rar","type":"download","note":".rar · 52 MB"}]},{"id":"gemini-a","group":"Gemini","brand":"gemini","color":"blue","title":"Gemini · Cách A","subtitle":"Tải tệp vào mục Kỹ năng","tag":"Nhanh nhất · cần thẻ Kỹ năng","desc":"Dùng khi Tuỳ chỉnh có thẻ **Kỹ năng**.","steps":["Tải **1 tệp .rar**, giải nén ra, đọc PDF","Kỹ năng → Tạo → Tải lên, chọn `SKILL.md`","Gõ `@tro-ly-giao-vien Bắt đầu`"],"buttons":[{"label":"Tải gói Gemini cách A","url":"https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep.rar","type":"download","note":".rar · 621 KB"}]},{"id":"gemini-b","group":"Gemini","brand":"gemini","color":"purple","title":"Gemini · Cách B","subtitle":"Tạo Gem mới, mở PDF rồi sao chép","tag":"Luôn dùng được","desc":"Dùng khi chưa có thẻ Kỹ năng hoặc cách A không được.","steps":["Tải **1 tệp .rar**, giải nén ra, đọc PDF","Gem mới: chép 3 khối trong PDF, nạp `TRI-THUC-GEM.txt`","Lưu, mở Gem, gõ `Bắt đầu`"],"buttons":[{"label":"Tải gói Gemini cách B","url":"https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep.rar","type":"download","note":".rar · 512 KB"}]},{"id":"chatgpt","group":"ChatGPT","brand":"chatgpt","color":"green","title":"ChatGPT","subtitle":"Bản web chatgpt.com","tag":"Đã thử trên tài khoản Free","desc":"Plugin tải lên; có cách dự phòng dán nội dung.","steps":["Tải **1 tệp .rar**, giải nén ra (zip bên trong **không giải nén**)","Plugin → **Thêm** → Tải lên tệp nén plugin","Gõ `@` chọn `tro-ly-giao-vien`"],"buttons":[{"label":"Tải gói ChatGPT","url":"https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/4-ChatGPT-plugin-tai-len-zip/4-ChatGPT-plugin-tai-len-zip.rar","type":"download","note":".rar · 580 KB"}]}]}</script>
+<script>
+(function(){
+'use strict';
+var REPO={owner:'thanhliemcnttedu-cpu',name:'Pluginnguyenthanhliem',branch:'main',path:'Tai_Plugin.data.json'};
+var RAW='https://raw.githubusercontent.com/'+REPO.owner+'/'+REPO.name+'/'+REPO.branch+'/'+REPO.path;
+var API='https://api.github.com/repos/'+REPO.owner+'/'+REPO.name+'/contents/'+REPO.path;
+var $=function(s,e){return (e||document).querySelector(s)};
+var seed=JSON.parse($('#seed').textContent);
+var state={data:clone(seed),admin:false,dirty:false,group:'all',q:'',editing:null};
+var SVG={
+ claude:'<svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#d97757" stroke-width="5" stroke-linecap="round"><path d="M24 5v38"/><path d="M5 24h38"/><path d="M10.6 10.6l26.8 26.8"/><path d="M37.4 10.6 10.6 37.4"/></g><circle cx="24" cy="24" r="4" fill="#d97757"/></svg>',
+ gemini:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5C12.9 7.6 16.4 11.1 22.5 12 16.4 12.9 12.9 16.4 12 22.5 11.1 16.4 7.6 12.9 1.5 12 7.6 11.1 11.1 7.6 12 1.5z" fill="url(#gm)"/></svg>',
+ chatgpt:'<svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#10a37f" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="5" width="10" height="22" rx="5"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(60 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(120 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(180 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(240 24 24)"/><rect x="19" y="5" width="10" height="22" rx="5" transform="rotate(300 24 24)"/></g></svg>',
+ package:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 3.5 7v10L12 21.5 20.5 17V7z" fill="none" stroke="#475569" stroke-width="1.9" stroke-linejoin="round"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10" fill="none" stroke="#475569" stroke-width="1.9" stroke-linejoin="round"/></svg>',
+ doc:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v5h5M9 13h6M9 17h6" fill="none" stroke="#475569" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+var ICON={download:'i-dl',doc:'i-doc',link:'i-link'};
+var COLORS=['blue','orange','purple','green','pink','slate'];
+
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+function ssGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function ssSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+function ssDel(k){try{sessionStorage.removeItem(k)}catch(e){}}
+function uid(){return 'm'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},3800)}
+function safeUrl(u){u=String(u||'').trim();return /^(https?:\/\/|tel:|mailto:)/i.test(u)?u:'#'}
+function fmtDate(s){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');return m?m[3]+'/'+m[2]+'/'+m[1]:(s||'')}
+function fmt(parent,text){String(text||'').split(/(\*\*[^*]+\*\*|`[^`]+`)/).forEach(function(p){if(!p)return;if(p.slice(0,2)==='**'&&p.slice(-2)==='**'){parent.appendChild(el('b',null,p.slice(2,-2)))}else if(p[0]==='`'&&p.slice(-1)==='`'){parent.appendChild(el('code',null,p.slice(1,-1)))}else parent.appendChild(document.createTextNode(p))})}
+function validData(d){return d&&Array.isArray(d.items)&&d.admin&&d.admin.hash&&d.admin.salt&&d.admin.user}
+
+/* ---------- vẽ giao diện ---------- */
+function groups(){var g=[];state.data.items.forEach(function(i){if(i.group&&g.indexOf(i.group)<0)g.push(i.group)});return g}
+function renderChips(){
+  var box=$('#chips');box.textContent='';
+  var gs=groups();
+  if(state.group!=='all'&&gs.indexOf(state.group)<0)state.group='all';
+  [['all','Tất cả']].concat(gs.map(function(g){return [g,g]})).forEach(function(p){
+    var b=el('button','chip',p[1]);b.type='button';b.setAttribute('aria-pressed',state.group===p[0]?'true':'false');
+    b.onclick=function(){state.group=p[0];render()};box.appendChild(b)});
+  var dl=$('#groups');dl.textContent='';gs.forEach(function(g){var o=document.createElement('option');o.value=g;dl.appendChild(o)});
+}
+function match(it){
+  if(state.group!=='all'&&it.group!==state.group)return false;
+  if(!state.q)return true;
+  var hay=[it.title,it.subtitle,it.tag,it.desc,it.group].concat(it.steps||[]).join(' ').toLowerCase();
+  return state.q.toLowerCase().split(/\s+/).every(function(w){return hay.indexOf(w)>=0});
+}
+function card(it,idx){
+  var a=el('article','card c-'+(COLORS.indexOf(it.color)>=0?it.color:'blue'));a.style.setProperty('--i',idx);a.dataset.id=it.id;
+  var head=el('div','head'),ico=el('div','ico');ico.innerHTML=SVG[it.brand]||SVG.package;
+  var tt=el('div');tt.appendChild(el('h2',null,it.title));if(it.subtitle)tt.appendChild(el('small',null,it.subtitle));
+  head.appendChild(ico);head.appendChild(tt);a.appendChild(head);
+  if(it.tag)a.appendChild(el('span','tag',it.tag));
+  if(it.desc){var p=el('p','desc');fmt(p,it.desc);a.appendChild(p)}
+  if(it.steps&&it.steps.length){var ol=el('ol');it.steps.forEach(function(s){var li=el('li');var sp=el('span');fmt(sp,s);li.appendChild(sp);ol.appendChild(li)});a.appendChild(ol)}
+  var act=el('div','act');
+  (it.buttons||[]).forEach(function(b,k){
+    var x=el('a','btn '+(k===0?'primary':'ghost'));x.href=safeUrl(b.url);x.dataset.t=b.type||'download';
+    if(b.type==='doc'||b.type==='link'){x.target='_blank';x.rel='noopener'}
+    var s=document.createElementNS('http://www.w3.org/2000/svg','svg');var u=document.createElementNS('http://www.w3.org/2000/svg','use');u.setAttribute('href','#'+(ICON[b.type]||'i-dl'));s.appendChild(u);x.appendChild(s);
+    x.appendChild(document.createTextNode(b.label||'Tải về'));if(b.note){x.appendChild(document.createTextNode(' '));x.appendChild(el('small',null,b.note))}
+    act.appendChild(x)});
+  a.appendChild(act);
+  if(state.admin){
+    var t=el('div','tools-card');
+    [['↑','Chuyển lên',function(){move(it.id,-1)}],['↓','Chuyển xuống',function(){move(it.id,1)}],['✎','Sửa',function(){openEdit(it.id)}],['🗑','Xóa',function(){del(it.id)}]].forEach(function(d){
+      var b=el('button',d[0]==='🗑'?'del':'',d[0]);b.type='button';b.title=d[1];b.setAttribute('aria-label',d[1]);b.onclick=d[2];t.appendChild(b)});
+    a.appendChild(t)}
+  return a;
+}
+function render(){
+  renderChips();
+  var g=$('#grid');g.textContent='';
+  var list=state.data.items.filter(match);
+  list.forEach(function(it,i){g.appendChild(card(it,i))});
+  if(state.admin){var ad=el('div','card add');ad.style.setProperty('--i',list.length);ad.tabIndex=0;ad.setAttribute('role','button');
+    var in1=el('div');in1.appendChild(el('span',null,'+'));in1.appendChild(document.createTextNode('Thêm mục mới'));ad.appendChild(in1);
+    ad.onclick=function(){openEdit(null)};ad.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openEdit(null)}};g.appendChild(ad)}
+  $('#empty').hidden=list.length>0||state.admin;
+  $('#count').textContent=state.data.items.length+' gói · cập nhật '+fmtDate(state.data.updated);
+  $('#upd').textContent=fmtDate(state.data.updated);
+  $('#adminbar').hidden=!state.admin;$('#dirty').hidden=!state.dirty;
+  document.body.classList.toggle('admin',state.admin);
+  bindFx();
+}
+/* hiệu ứng rê chuột: sáng theo con trỏ + nghiêng 3D nhẹ + gợn sóng khi bấm */
+function bindFx(){
+  var fine=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  document.querySelectorAll('.card:not(.add)').forEach(function(c){
+    if(fine&&!reduce){
+      c.onpointermove=function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+        c.style.setProperty('--mx',(x*100)+'%');c.style.setProperty('--my',(y*100)+'%');
+        c.style.setProperty('--ry',((x-.5)*7)+'deg');c.style.setProperty('--rx',((.5-y)*6)+'deg')};
+      c.onpointerleave=function(){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')};
+    }
+  });
+  document.querySelectorAll('.btn').forEach(function(b){
+    b.onpointerdown=function(e){if(reduce)return;var r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),d=el('span','rip');
+      d.style.width=d.style.height=s+'px';d.style.left=(e.clientX-r.left-s/2)+'px';d.style.top=(e.clientY-r.top-s/2)+'px';b.appendChild(d);setTimeout(function(){d.remove()},650)}
+  });
+}
+
+/* ---------- dữ liệu: tải bản mới nhất từ GitHub ---------- */
+function fetchT(url,opt,ms){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||6000);opt=opt||{};opt.signal=c.signal;return fetch(url,opt).finally(function(){clearTimeout(t)})}
+function loadRemote(){
+  fetchT(RAW+'?t='+Date.now(),{cache:'no-store'},6000).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    if(validData(d)&&!state.dirty){state.data=d;render()}
+  }).catch(function(){})
+}
+
+/* ---------- quản trị ---------- */
+function b64ToBytes(b){var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a}
+function bytesToB64(a){var s='';for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s)}
+function pbkdf2(pw,saltB64,iter){
+  if(!(window.crypto&&crypto.subtle))return Promise.reject(new Error('Trình duyệt không hỗ trợ mã hóa (cần mở bằng Chrome, Edge hoặc Firefox mới).'));
+  var enc=new TextEncoder();
+  return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveBits']).then(function(k){
+    return crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:b64ToBytes(saltB64),iterations:iter},k,256)}).then(function(b){return bytesToB64(new Uint8Array(b))});
+}
+var fails=0,lockUntil=0;
+function openLogin(){
+  if(state.admin){return}
+  $('#lErr').textContent='';$('#lPass').value='';$('#dLogin').showModal();$('#lUser').focus();
+}
+$('#fLogin').addEventListener('submit',function(e){
+  e.preventDefault();
+  var now=Date.now();if(now<lockUntil){$('#lErr').textContent='Thử sai nhiều lần. Chờ '+Math.ceil((lockUntil-now)/1000)+' giây.';return}
+  var a=state.data.admin,u=$('#lUser').value.trim(),p=$('#lPass').value;
+  pbkdf2(p,a.salt,a.iter||200000).then(function(h){
+    if(u===a.user&&h===a.hash){fails=0;ssSet('tp_admin',String(Date.now()+30*60*1000));$('#dLogin').close();enterAdmin(true)}
+    else{fails++;if(fails>=3){lockUntil=Date.now()+30000;fails=0}$('#lErr').textContent='Sai tài khoản hoặc mật khẩu.'}
+  }).catch(function(err){$('#lErr').textContent=err.message||'Không kiểm tra được.'});
+});
+function enterAdmin(fresh){
+  state.admin=true;
+  var draft=lsGet('tp_draft');
+  if(fresh&&draft){try{var d=JSON.parse(draft);if(validData(d)&&confirm('Có bản nháp chưa lưu từ lần trước. Bấm OK để mở lại bản nháp, Hủy để dùng bản hiện tại.')){state.data=d;state.dirty=true}}catch(e){}}
+  render();if(fresh)toast('Đã đăng nhập quản trị. Tự đăng xuất sau 30 phút.');
+  clearTimeout(enterAdmin.t);enterAdmin.t=setTimeout(function(){logout('Hết 30 phút, đã tự đăng xuất.')},30*60*1000);
+}
+function logout(msg){state.admin=false;ssDel('tp_admin');render();if(msg)toast(msg)}
+function markDirty(){state.dirty=true;state.data.updated=new Date().toISOString().slice(0,10);lsSet('tp_draft',JSON.stringify(state.data));render()}
+function move(id,dir){var a=state.data.items,i=a.findIndex(function(x){return x.id===id}),j=i+dir;if(j<0||j>=a.length)return;var t=a[i];a[i]=a[j];a[j]=t;markDirty()}
+function del(id){var it=state.data.items.find(function(x){return x.id===id});if(!it||!confirm('Xóa mục “'+it.title+'”?'))return;state.data.items=state.data.items.filter(function(x){return x.id!==id});markDirty();toast('Đã xóa. Nhớ bấm “Lưu lên GitHub”.')}
+
+function btnRow(b){
+  var r=el('div','brow');
+  var l=el('input');l.type='text';l.placeholder='Nhãn nút';l.value=b.label||'';l.maxLength=50;
+  var u=el('input');u.type='url';u.placeholder='https://…';u.value=b.url||'';
+  var t=el('select');[['download','Tải về'],['doc','Tài liệu'],['link','Liên kết']].forEach(function(o){var x=document.createElement('option');x.value=o[0];x.textContent=o[1];t.appendChild(x)});t.value=b.type||'download';
+  var n=el('input');n.type='text';n.placeholder='Ghi chú';n.value=b.note||'';n.maxLength=30;
+  var d=el('button',null,'✕');d.type='button';d.title='Xóa nút';d.onclick=function(){r.remove()};
+  [l,u,t,n,d].forEach(function(x){r.appendChild(x)});return r;
+}
+function openEdit(id){
+  state.editing=id;var it=id?state.data.items.find(function(x){return x.id===id}):{brand:'package',color:'blue',steps:[],buttons:[{type:'download'}]};
+  $('#eTitle').textContent=id?'Sửa mục':'Thêm mục mới';
+  $('#eName').value=it.title||'';$('#eSub').value=it.subtitle||'';$('#eGroup').value=it.group||'';$('#eTag').value=it.tag||'';
+  $('#eBrand').value=it.brand||'package';$('#eColor').value=it.color||'blue';$('#eDesc').value=it.desc||'';$('#eSteps').value=(it.steps||[]).join('\n');
+  var bx=$('#eBtns');bx.textContent='';(it.buttons&&it.buttons.length?it.buttons:[{type:'download'}]).forEach(function(b){bx.appendChild(btnRow(b))});
+  $('#eErr').textContent='';$('#dEdit').showModal();$('#eName').focus();
+}
+$('#eAddBtn').onclick=function(){$('#eBtns').appendChild(btnRow({type:'download'}))};
+$('#fEdit').addEventListener('submit',function(e){
+  e.preventDefault();
+  var btns=[],bad='';
+  document.querySelectorAll('#eBtns .brow').forEach(function(r){var f=r.children,lab=f[0].value.trim(),url=f[1].value.trim();
+    if(!lab&&!url)return;if(!lab){bad='Mỗi nút cần có nhãn.';return}if(!/^(https?:\/\/|tel:|mailto:)/i.test(url)){bad='Địa chỉ của nút “'+lab+'” phải bắt đầu bằng https:// (hoặc http://, tel:, mailto:).';return}
+    btns.push({label:lab,url:url,type:f[2].value,note:f[3].value.trim()})});
+  if(bad){$('#eErr').textContent=bad;return}
+  var name=$('#eName').value.trim();if(!name){$('#eErr').textContent='Cần nhập tên mục.';return}
+  var obj={id:state.editing||uid(),title:name,subtitle:$('#eSub').value.trim(),group:$('#eGroup').value.trim()||'Khác',tag:$('#eTag').value.trim(),brand:$('#eBrand').value,color:$('#eColor').value,desc:$('#eDesc').value.trim(),
+    steps:$('#eSteps').value.split('\n').map(function(s){return s.trim()}).filter(Boolean),buttons:btns};
+  if(state.editing){var i=state.data.items.findIndex(function(x){return x.id===state.editing});state.data.items[i]=obj}else state.data.items.push(obj);
+  $('#dEdit').close();markDirty();toast(state.editing?'Đã sửa mục. Nhớ bấm “Lưu lên GitHub”.':'Đã thêm mục mới. Nhớ bấm “Lưu lên GitHub”.');
+});
+$('#fSet').addEventListener('submit',function(e){e.preventDefault()});
+document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){b.closest('dialog').close()}});
+document.querySelectorAll('dialog').forEach(function(d){d.addEventListener('click',function(e){if(e.target===d)d.close()})});
+
+/* xuất / nhập / về bản gốc */
+$('#aExport').onclick=function(){var b=new Blob([JSON.stringify(state.data,null,2)+'\n'],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Tai_Plugin.data.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},3000);toast('Đã xuất Tai_Plugin.data.json')};
+$('#aImport').onclick=function(){$('#fileIn').click()};
+$('#fileIn').onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var d=JSON.parse(rd.result);if(!validData(d))throw 0;state.data=d;markDirty();toast('Đã nhập tệp JSON. Nhớ bấm “Lưu lên GitHub”.')}catch(e){toast('Tệp JSON không hợp lệ.')}};rd.readAsText(f);this.value=''};
+$('#aReset').onclick=function(){if(confirm('Đưa về bản gốc đóng kèm trong tệp HTML? Các thay đổi chưa lưu sẽ mất.')){state.data=clone(seed);state.dirty=false;lsDel('tp_draft');render();toast('Đã về bản gốc.')}};
+$('#aOut').onclick=function(){logout('Đã đăng xuất.')};
+$('#aSet').onclick=function(){$('#sErr').textContent='';$('#sTok').value=lsGet('tp_token')?'••••••••••••••••':'';$('#sNew').value=$('#sNew2').value='';$('#dSet').showModal()};
+$('#sTokSave').onclick=function(){var v=$('#sTok').value.trim();if(!v||/^•+$/.test(v)){$('#sErr').textContent='Dán token GitHub vào ô trên.';return}lsSet('tp_token',v);$('#sTok').value='••••••••••••••••';$('#sErr').textContent='';toast('Đã lưu token trong trình duyệt này.')};
+$('#sTokDel').onclick=function(){lsDel('tp_token');$('#sTok').value='';toast('Đã xóa token.')};
+$('#sPw').onclick=function(){
+  var a=$('#sNew').value,b=$('#sNew2').value;
+  if(a.length<10){$('#sErr').textContent='Mật khẩu cần ít nhất 10 ký tự.';return}
+  if(a!==b){$('#sErr').textContent='Hai lần nhập chưa khớp.';return}
+  var salt=new Uint8Array(16);crypto.getRandomValues(salt);var sB=bytesToB64(salt);
+  pbkdf2(a,sB,200000).then(function(h){state.data.admin.salt=sB;state.data.admin.hash=h;state.data.admin.iter=200000;markDirty();$('#dSet').close();toast('Đã đổi mật khẩu. Bấm “Lưu lên GitHub” để áp dụng cho mọi máy.')}).catch(function(e){$('#sErr').textContent=e.message})
+};
+
+/* lưu lên GitHub */
+function b64utf8(s){return btoa(unescape(encodeURIComponent(s)))}
+function gh(tok){return {'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
+function ghErr(st){return st===401?'Token sai hoặc đã hết hạn.':st===403?'Token chưa có quyền Contents: Read and write với kho này.':st===404?'Không thấy kho hoặc token không thuộc kho này.':st===409||st===422?'Tệp trên GitHub vừa bị đổi. Bấm lưu lại một lần nữa.':'GitHub báo lỗi '+st+'.'}
+$('#aSave').onclick=function(){
+  var tok=lsGet('tp_token');if(!tok){toast('Cần nhập token GitHub trước (nút Cài đặt).');$('#aSet').click();return}
+  var btn=this;btn.disabled=true;btn.textContent='Đang lưu…';
+  var json=JSON.stringify(state.data,null,2)+'\n',sha=null;
+  fetchT(API+'?ref='+REPO.branch,{headers:gh(tok),cache:'no-store'},15000).then(function(r){
+    if(r.status===200)return r.json().then(function(j){sha=j.sha});
+    if(r.status!==404)throw new Error(ghErr(r.status))
+  }).then(function(){
+    var body={message:'Cập nhật danh sách tải (Tai_Plugin)',content:b64utf8(json),branch:REPO.branch};if(sha)body.sha=sha;
+    var h=gh(tok);h['Content-Type']='application/json';
+    return fetchT(API,{method:'PUT',headers:h,body:JSON.stringify(body)},20000)
+  }).then(function(r){if(!r.ok)throw new Error(ghErr(r.status));state.dirty=false;lsDel('tp_draft');render();toast('Đã lưu lên GitHub. Máy khác thấy bản mới sau vài phút.')
+  }).catch(function(e){toast(e&&e.name==='AbortError'?'Hết thời gian chờ GitHub.':(e.message||'Không lưu được.'))
+  }).finally(function(){btn.disabled=false;btn.textContent='Lưu lên GitHub'});
+};
+$('#btnAdmin').onclick=$('#btnAdmin2').onclick=function(){state.admin?toast('Đang ở chế độ quản trị.'):openLogin()};
+$('#q').addEventListener('input',function(){state.q=this.value.trim();render()});
+window.addEventListener('beforeunload',function(e){if(state.dirty&&state.admin){e.preventDefault();e.returnValue=''}});
+
+/* khởi động */
+var until=parseInt(ssGet('tp_admin')||'0',10);
+render();
+if(until>Date.now()){enterAdmin(false)}
+loadRemote();
+window.__tp={state:state,seed:seed};
+})();
+</script>
 </body>
 </html>

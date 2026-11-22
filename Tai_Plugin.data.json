@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "updated": "2026-11-22",
+  "admin": {
+    "user": "quantri",
+    "salt": "3pUHHD0wetaL2Asc+aUP8w==",
+    "iter": 200000,
+    "hash": "Dpywwv4DzJRoO7p27xBZ+/NJyAjqCIK6M5HGCV1gq2w="
+  },
+  "items": [
+    {
+      "id": "claude",
+      "group": "Claude",
+      "brand": "claude",
+      "color": "orange",
+      "title": "Claude",
+      "subtitle": "Ứng dụng trên máy tính",
+      "tag": "139 skill · 283 agent",
+      "desc": "Cài toàn bộ bộ skill vào ứng dụng Claude. Gói có bản đầy đủ và bản gọn, chọn 1 tệp zip.",
+      "steps": [
+        "Tải **1 tệp .rar**, giải nén ra",
+        "Cài đặt → Plugin → **Thêm** → Tải lên plugin: chọn **1 tệp zip** (không giải nén zip)",
+        "Mở lại Claude, gõ `Cài bộ skill`"
+      ],
+      "buttons": [
+        {
+          "label": "Tải gói Claude",
+          "url": "https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/1-plugin-Claude-PC/1-plugin-Claude-PC.rar",
+          "type": "download",
+          "note": ".rar · 52 MB"
+        }
+      ]
+    },
+    {
+      "id": "gemini-a",
+      "group": "Gemini",
+      "brand": "gemini",
+      "color": "blue",
+      "title": "Gemini · Cách A",
+      "subtitle": "Tải tệp vào mục Kỹ năng",
+      "tag": "Nhanh nhất · cần thẻ Kỹ năng",
+      "desc": "Dùng khi Tuỳ chỉnh có thẻ **Kỹ năng**.",
+      "steps": [
+        "Tải **1 tệp .rar**, giải nén ra, đọc PDF",
+        "Kỹ năng → Tạo → Tải lên, chọn `SKILL.md`",
+        "Gõ `@tro-ly-giao-vien Bắt đầu`"
+      ],
+      "buttons": [
+        {
+          "label": "Tải gói Gemini cách A",
+          "url": "https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep/2-Gemini-cach-A-phat-trien-ky-nang-tai-len-tep.rar",
+          "type": "download",
+          "note": ".rar · 621 KB"
+        }
+      ]
+    },
+    {
+      "id": "gemini-b",
+      "group": "Gemini",
+      "brand": "gemini",
+      "color": "purple",
+      "title": "Gemini · Cách B",
+      "subtitle": "Tạo Gem mới, mở PDF rồi sao chép",
+      "tag": "Luôn dùng được",
+      "desc": "Dùng khi chưa có thẻ Kỹ năng hoặc cách A không được.",
+      "steps": [
+        "Tải **1 tệp .rar**, giải nén ra, đọc PDF",
+        "Gem mới: chép 3 khối trong PDF, nạp `TRI-THUC-GEM.txt`",
+        "Lưu, mở Gem, gõ `Bắt đầu`"
+      ],
+      "buttons": [
+        {
+          "label": "Tải gói Gemini cách B",
+          "url": "https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep/3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep.rar",
+          "type": "download",
+          "note": ".rar · 512 KB"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt",
+      "group": "ChatGPT",
+      "brand": "chatgpt",
+      "color": "green",
+      "title": "ChatGPT",
+      "subtitle": "Bản web chatgpt.com",
+      "tag": "Đã thử trên tài khoản Free",
+      "desc": "Plugin tải lên; có cách dự phòng dán nội dung.",
+      "steps": [
+        "Tải **1 tệp .rar**, giải nén ra (zip bên trong **không giải nén**)",
+        "Plugin → **Thêm** → Tải lên tệp nén plugin",
+        "Gõ `@` chọn `tro-ly-giao-vien`"
+      ],
+      "buttons": [
+        {
+          "label": "Tải gói ChatGPT",
+          "url": "https://raw.githubusercontent.com/thanhliemcnttedu-cpu/Pluginnguyenthanhliem/main/4-ChatGPT-plugin-tai-len-zip/4-ChatGPT-plugin-tai-len-zip.rar",
+          "type": "download",
+          "note": ".rar · 580 KB"
+        }
+      ]
+    }
+  ]
+}
