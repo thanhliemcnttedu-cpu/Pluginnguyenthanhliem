@@ -11,8 +11,15 @@ Mỗi thư mục là một gói riêng, chỉ có **một tệp .rar** (cần Wi
 | `3-Gemini-cach-B-tao-Gem-moi-mo-tep-sao-chep` | Gemini: tạo Gem mới |
 | `4-ChatGPT-plugin-tai-len-zip` | ChatGPT bản web |
 
+## Trợ lý làm được gì
+Soạn kế hoạch giáo dục, phân phối chương trình, giáo án, lịch báo giảng, kế hoạch tập huấn, biên bản, báo cáo; viết câu lệnh cho công cụ AI khác. Từ 22/11/2026 có thêm 4 chế độ: **bài giảng PowerPoint từ sách giáo khoa**, **ra đề kiểm tra** (ma trận, đặc tả, nhiều mã đề, đáp án), **video AI và trò chơi tương tác** (tệp HTML chạy ngoại tuyến), **sáng kiến kinh nghiệm** (khung, phản biện, mẫu biểu, 10 hướng đề tài).
+
+## Tệp dữ liệu của trang tải
+`Tai_Plugin.data.json` chứa danh sách các gói hiển thị trên trang `Tai_Plugin.html`. Trang tự lấy bản mới nhất của tệp này từ kho khi mở (cần Internet). Người quản trị có thể thêm, sửa, xóa mục ngay trên trang (nút ổ khóa) rồi lưu lên kho bằng token GitHub.
+
 ## Lưu ý
 - Đây là plugin cá nhân của thầy Nguyễn Thanh Liêm, có thể chỉ phù hợp trong thời điểm hiện tại. Liên hệ: điện thoại và Zalo 0888 358 363.
 - Giao diện Claude, Gemini, ChatGPT có thể đổi theo thời gian.
 - Tài liệu tải lên các công cụ AI là gửi cho nhà cung cấp; bỏ tên và mã định danh học sinh trước khi tải.
+- Đề kiểm tra, bài giảng và trò chơi do AI soạn chỉ là bản nháp: giáo viên cần đối chiếu sách giáo khoa và chơi thử trước khi dùng.
 - Gói Claude chứa skill và agent của bên thứ ba; mỗi thành phần theo giấy phép của tác giả gốc.
