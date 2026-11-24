@@ -12,7 +12,9 @@ Mỗi thư mục là một gói riêng, chỉ có **một tệp .rar** (cần Wi
 | `4-ChatGPT-plugin-tai-len-zip` | ChatGPT bản web |
 
 ## Trợ lý làm được gì
-Soạn kế hoạch giáo dục, phân phối chương trình, giáo án, lịch báo giảng, kế hoạch tập huấn, biên bản, báo cáo; viết câu lệnh cho công cụ AI khác. Từ 22/11/2026 có thêm 4 chế độ: **bài giảng PowerPoint từ sách giáo khoa**, **ra đề kiểm tra** (ma trận, đặc tả, nhiều mã đề, đáp án), **video AI và trò chơi tương tác** (tệp HTML chạy ngoại tuyến), **sáng kiến kinh nghiệm** (khung, phản biện, mẫu biểu, 10 hướng đề tài).
+Soạn kế hoạch giáo dục, phân phối chương trình, giáo án, lịch báo giảng, kế hoạch tập huấn, biên bản, báo cáo; viết câu lệnh cho công cụ AI khác. Có thêm 5 chế độ: **bài giảng PowerPoint từ sách giáo khoa**, **ra đề kiểm tra** (ma trận, đặc tả, nhiều mã đề, đáp án), **video AI và trò chơi tương tác** (tệp HTML chạy ngoại tuyến), **sáng kiến kinh nghiệm** (khung, phản biện, mẫu biểu, 10 hướng đề tài), và từ 24/11/2026 **phóng viên giáo dục** (viết tin bài hoạt động nhà trường, tin ngắn, bài fanpage, thư mời; biên tập, rút gọn, kiểm duyệt trước khi đăng; không bịa dữ kiện, không phát ngôn thay lãnh đạo).
+
+Trang tải có mục **Tài liệu đính kèm**: người quản trị thêm tệp Word, Excel bằng cách dán liên kết (Google Drive, GitHub) hoặc đính kèm trực tiếp; thầy cô chỉ cần bấm "Tải về".
 
 ## Tệp dữ liệu của trang tải
 `Tai_Plugin.data.json` chứa danh sách các gói hiển thị trên trang `Tai_Plugin.html`. Trang tự lấy bản mới nhất của tệp này từ kho khi mở (cần Internet). Người quản trị có thể thêm, sửa, xóa mục ngay trên trang (nút ổ khóa) rồi lưu lên kho bằng token GitHub.
